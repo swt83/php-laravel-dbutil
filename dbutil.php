@@ -59,10 +59,22 @@ class DBUtil
 	 *
 	 * @param	string	$connection
 	 */
-	public static function tables($connection = null)
+	public static function tables($database = null, $connection = null)
 	{
-		// query the pdo
-		$result = DB::connection($connection)->pdo->query('show tables');
+		// capture pdo
+		$pdo = DB::connection($connection)->pdo;
+	
+		// use default database
+		if ($database === null)
+		{
+			$result = $pdo->query('show tables');
+		}
+		
+		// use custom database
+		else
+		{
+			$result = $pdo->query('show tables from '.$database);
+		}
 		
 		// build array
 		$tables = array();

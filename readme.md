@@ -20,6 +20,6 @@ Add the following to your bundles.php config:
 
 * ``DBUtil::truncate($table);`` Runs simple truncate on table.
 * ``DBUtil::optimize($table);`` Runs simple optimize on table.
-* ``DBUtil::columns($table);`` Returns array of available columns for table.
-* ``DBUtil::tables();`` Returns array of available tables for connection.
-* ``DBUtil::databases();`` Returns array of available databases.
+* ``DBUtil::columns($table, [$connection]);`` Returns array of available columns for table.
+* ``DBUtil::tables([$database], [$connection]);`` Returns array of available tables for database.
+* ``DBUtil::databases([$connection]);`` Returns array of available databases.
