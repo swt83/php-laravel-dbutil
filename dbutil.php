@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * A LaravelPHP Package for DB management functions.
+ *
+ * @package    DBUtil
+ * @version    1.0
+ * @author     Scott Travis <scott.w.travis@gmail.com>
+ * @link       http://github.com/swt83
+ * @license    MIT License
+ */
+
 class DBUtil
 {
 	/**
