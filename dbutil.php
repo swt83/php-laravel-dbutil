@@ -47,7 +47,7 @@ class DBUtil
 		$columns = array();
 		while ($row = $result->fetch(PDO::FETCH_NUM))
 		{
-		    $columns[] = $row[0];
+			$columns[] = $row[0];
 		}
 		
 		// return
@@ -68,7 +68,7 @@ class DBUtil
 		$tables = array();
 		while ($row = $result->fetch(PDO::FETCH_NUM))
 		{
-		    $tables[] = $row[0];
+			$tables[] = $row[0];
 		}
 		
 		// return
@@ -89,7 +89,7 @@ class DBUtil
 		$db = array();
 		while ($row = $result->fetch(PDO::FETCH_NUM))
 		{
-		    $db[] = $row[0];
+			$db[] = $row[0];
 		}
 		
 		// return
