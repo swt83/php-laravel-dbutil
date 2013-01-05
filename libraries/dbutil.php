@@ -20,11 +20,8 @@ class DBUtil {
      */
     public static function make($table, $columns, $connection = null)
     {
-        // load existing tables
-        $existing = static::tables();
-        
-        // check if already exists...
-        if (in_array($table, $existing))
+        // check exists
+        if (static::exists($table))
         {
             // error
             trigger_error('Table already exists.');
@@ -71,7 +68,7 @@ class DBUtil {
      */
     public static function drop($table, $connection = null)
     {
-        DB::connection($connection)->pdo->query('drop '.$table);
+        DB::connection($connection)->pdo->query('drop table '.$table);
     }
 
     /**
@@ -145,25 +142,14 @@ class DBUtil {
     }
     
     /**
-     * Get array of databases.
+     * Check if table exists.
      *
-     * @param   string  $connection
-     * @return  array
+     * @param   string  $table
+     * @return  boolean
      */
-    public static function databases($connection = null)
+    public static function exists($table)
     {
-        // query the pdo
-        $result = DB::connection($connection)->pdo->query('show databases');
-        
-        // build array
-        $db = array();
-        while ($row = $result->fetch(PDO::FETCH_NUM))
-        {
-            $db[] = $row[0];
-        }
-        
-        // return
-        return $db;
+        return in_array($table, static::tables());
     }
 
 }
