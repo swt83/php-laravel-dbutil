@@ -20,6 +20,19 @@ class DBUtil {
      */
     public static function make($table, $columns, $connection = null)
     {
+        // load existing tables
+        $existing = static::tables();
+        
+        // check if already exists...
+        if (in_array($table, $existing))
+        {
+            // error
+            trigger_error('Table already exists.');
+
+            // return
+            return false;
+        }
+
         // Laravel provides a mechanism for building tables,
         // but only in the context of migrations which are run
         // at the command line.  The following is a makeshift
