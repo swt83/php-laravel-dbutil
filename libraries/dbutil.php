@@ -43,17 +43,32 @@ class DBUtil {
         $db->increments('id');
 
         // for each column...
-        foreach ($columns as $name => $value)
+        foreach ($columns as $column)
         {
             // The makeup of the $columns array is to define
             // each field w/ the name as the key, and the
             // value containing both a type and a length.
 
-            $type = $value['type'];
-            $length = $value['length'];
+            $field = $column['field'];
 
-            // add to schema
-            $db->$type($name, $length);
+            // if not "id"...
+            if ($field !== 'id')
+            {
+                $type = $column['type'];
+                $length = isset($column['length']) ? $column['length'] : null;
+
+                // if length...
+                if ($length)
+                {
+                    // add to schema
+                    $db->$type($field, $length);
+                }
+                else
+                {
+                    // add to schema
+                    $db->$type($field);
+                }
+            }
         }
 
         // execute
