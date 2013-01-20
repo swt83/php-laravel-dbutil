@@ -40,8 +40,7 @@ class DBUtil {
 
         $db = new Laravel\Database\Schema\Table($table);
         $db->create();
-        $db->increments('id');
-
+        
         // for each column...
         foreach ($columns as $column)
         {
@@ -49,26 +48,12 @@ class DBUtil {
             // each field w/ the name as the key, and the
             // value containing both a type and a length.
 
-            $field = $column['field'];
-
-            // if not "id"...
-            if ($field !== 'id')
-            {
-                $type = $column['type'];
-                $length = isset($column['length']) ? $column['length'] : null;
-
-                // if length...
-                if ($length)
-                {
-                    // add to schema
-                    $db->$type($field, $length);
-                }
-                else
-                {
-                    // add to schema
-                    $db->$type($field);
-                }
-            }
+            $type = $column['type'];
+            $field = isset($column['field']) ? $column['field'] : null;
+            $length = isset($column['length']) ? $column['length'] : null;
+            
+            // add to schema
+            $db->$type($field, $length);
         }
 
         // execute
