@@ -4,10 +4,10 @@ When working w/ the DB class I found I couldn't perform certain DB management fu
 
 ## Methods ##
 
-* ``DBUtil::make($table, $columns);`` Build a new table.
-* ``DBUtil::drop($table);`` Drop a table.
-* ``DBUtil::truncate($table);`` Truncate a table.
-* ``DBUtil::optimize($table);`` Optimize a table.
+* ``DBUtil::make($table, $columns, [$connection]);`` Build a new table.
+* ``DBUtil::drop($table, [$connection]);`` Drop a table.
+* ``DBUtil::truncate($table, [$connection]);`` Truncate a table.
+* ``DBUtil::optimize($table, [$connection]);`` Optimize a table.
 * ``DBUtil::columns($table, [$connection]);`` Returns array of available columns for table.
 * ``DBUtil::tables([$database], [$connection]);`` Returns array of available tables for database.
 * ``DBUtil::databases([$connection]);`` Returns array of available databases.
