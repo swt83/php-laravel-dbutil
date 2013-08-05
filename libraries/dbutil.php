@@ -54,6 +54,15 @@ class DBUtil {
             
             // add to schema
             $db->$type($field, $length);
+
+            // if index...
+            if (isset($column['index']))
+            {
+                if ($column['index'] == true)
+                {
+                    $db->index($field);
+                }
+            }
         }
 
         // execute
