@@ -1,0 +1,22 @@
+{
+    "name": "travis/dbutil",
+    "description": "A Laravel PHP library for advanced database functions.",
+    "homepage": "git@github.com:swt83/php-laravel-dbutil.git",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Scott Travis",
+            "email": "scott.w.travis@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Travis\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

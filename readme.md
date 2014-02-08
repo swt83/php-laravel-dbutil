@@ -1,8 +1,14 @@
-# DBUtil for Laravel 3 #
+# DBUtil
+
+A Laravel PHP library for advanced database functions.
 
 When working w/ the DB class I found I couldn't perform certain DB management functions.  Something to do w/ how the DB class interacts w/ the PDO connection.  I made this class to handle the handful of misc management functions I needed.
 
-## Methods ##
+## Install
+
+Normal install via Composer.
+
+## Methods
 
 * ``DBUtil::make($table, $columns, [$connection]);`` Build a new table.
 * ``DBUtil::drop($table, [$connection]);`` Drop a table.
@@ -12,6 +18,6 @@ When working w/ the DB class I found I couldn't perform certain DB management fu
 * ``DBUtil::tables([$database], [$connection]);`` Returns array of available tables for database.
 * ``DBUtil::databases([$connection]);`` Returns array of available databases.
 
-## Limitations ##
+## Limitations
 
 I'm told this only works with MySQL databases.

@@ -1,13 +1,6 @@
 <?php
 
-/**
- * A LaravelPHP Package for DB management functions.
- *
- * @package    DBUtil
- * @author     Scott Travis <scott.w.travis@gmail.com>
- * @link       http://github.com/swt83/laravel-dbutil
- * @license    MIT License
- */
+namespace Travis;
 
 class DBUtil {
 
@@ -34,13 +27,13 @@ class DBUtil {
         // but only in the context of migrations which are run
         // at the command line.  The following is a makeshift
         // way of achieving the same thing using the same methods.
-        
+
         // NOTE: I don't know how to make this work w/ a custom
         // connection.  Only working w/ default connection.
 
-        $db = new Laravel\Database\Schema\Table($table);
+        $db = new \Laravel\Database\Schema\Table($table);
         $db->create();
-        
+
         // for each column...
         foreach ($columns as $column)
         {
@@ -51,7 +44,7 @@ class DBUtil {
             $type = $column['type'];
             $field = isset($column['field']) ? $column['field'] : null;
             $length = isset($column['length']) ? $column['length'] : null;
-            
+
             // add to schema
             $db->$type($field, $length);
 
@@ -66,7 +59,7 @@ class DBUtil {
         }
 
         // execute
-        Schema::execute($db);
+        \Schema::execute($db);
     }
 
     /**
@@ -77,7 +70,7 @@ class DBUtil {
      */
     public static function drop($table, $connection = null)
     {
-        DB::connection($connection)->pdo->query('drop table '.$table);
+        \DB::connection($connection)->getPdo()->query('drop table '.$table);
     }
 
     /**
@@ -88,9 +81,9 @@ class DBUtil {
      */
     public static function truncate($table, $connection = null)
     {
-        DB::connection($connection)->pdo->query('truncate '.$table);
+        \DB::connection($connection)->getPdo()->query('truncate '.$table);
     }
-    
+
     /**
      * Optimize a table.
      *
@@ -99,9 +92,9 @@ class DBUtil {
      */
     public static function optimize($table, $connection = null)
     {
-        DB::connection($connection)->pdo->query('optimize table '.$table);
+        \DB::connection($connection)->getPdo()->query('optimize table '.$table);
     }
-    
+
     /**
      * Get array of tables columns.
      *
@@ -112,19 +105,19 @@ class DBUtil {
     public static function columns($table, $connection = null)
     {
         // query the pdo
-        $result = DB::connection($connection)->pdo->query('show columns from '.$table);
-        
+        $result = \DB::connection($connection)->getPdo()->query('show columns from '.$table);
+
         // build array
         $columns = array();
         while ($row = $result->fetch(PDO::FETCH_NUM))
         {
             $columns[] = $row[0];
         }
-        
+
         // return
         return $columns;
     }
-    
+
     /**
      * Get array of database tables.
      *
@@ -134,22 +127,22 @@ class DBUtil {
     public static function tables($connection = null)
     {
         // capture pdo
-        $pdo = DB::connection($connection)->pdo;
-    
+        $pdo = \DB::connection($connection)->getPdo();
+
         // run query
         $result = $pdo->query('show tables');
-        
+
         // build array
         $tables = array();
         while ($row = $result->fetch(PDO::FETCH_NUM))
         {
             $tables[] = $row[0];
         }
-        
+
         // return
         return $tables;
     }
-    
+
     /**
      * Check if table exists.
      *
