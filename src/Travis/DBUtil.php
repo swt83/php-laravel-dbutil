@@ -2,8 +2,8 @@
 
 namespace Travis;
 
-class DBUtil {
-
+class DBUtil
+{
     /**
      * Make a table.
      *
@@ -23,43 +23,32 @@ class DBUtil {
             return false;
         }
 
-        // Laravel provides a mechanism for building tables,
-        // but only in the context of migrations which are run
-        // at the command line.  The following is a makeshift
-        // way of achieving the same thing using the same methods.
-
-        // NOTE: I don't know how to make this work w/ a custom
-        // connection.  Only working w/ default connection.
-
-        $db = new \Laravel\Database\Schema\Table($table);
-        $db->create();
-
-        // for each column...
-        foreach ($columns as $column)
+        // build table
+        \Schema::connection($connection)->create($table, function($table) use($columns)
         {
-            // The makeup of the $columns array is to define
-            // each field w/ the name as the key, and the
-            // value containing both a type and a length.
-
-            $type = $column['type'];
-            $field = isset($column['field']) ? $column['field'] : null;
-            $length = isset($column['length']) ? $column['length'] : null;
-
-            // add to schema
-            $db->$type($field, $length);
-
-            // if index...
-            if (isset($column['index']))
+            // for each column...
+            foreach ($columns as $column)
             {
-                if ($column['index'] == true)
+                // get vars
+                $type = $column['type'];
+                $field = isset($column['field']) ? $column['field'] : null;
+                $length = isset($column['length']) ? $column['length'] : null;
+
+                // add column
+                $table->$type($field, $length);
+
+                // if index set...
+                if (isset($column['index']))
                 {
-                    $db->index($field);
+                    // if index true...
+                    if ($column['index'])
+                    {
+                        // add index
+                        $table->index($field);
+                    }
                 }
             }
-        }
-
-        // execute
-        \Schema::execute($db);
+        });
     }
 
     /**
@@ -109,7 +98,7 @@ class DBUtil {
 
         // build array
         $columns = array();
-        while ($row = $result->fetch(PDO::FETCH_NUM))
+        while ($row = $result->fetch(\PDO::FETCH_NUM))
         {
             $columns[] = $row[0];
         }
@@ -134,7 +123,7 @@ class DBUtil {
 
         // build array
         $tables = array();
-        while ($row = $result->fetch(PDO::FETCH_NUM))
+        while ($row = $result->fetch(\PDO::FETCH_NUM))
         {
             $tables[] = $row[0];
         }
@@ -153,5 +142,4 @@ class DBUtil {
     {
         return in_array($table, static::tables());
     }
-
 }
