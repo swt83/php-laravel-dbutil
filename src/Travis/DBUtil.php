@@ -26,6 +26,9 @@ class DBUtil
         // build table
         \Schema::connection($connection)->create($table, function($table) use($columns)
         {
+            // always have id field
+            $table->increments('id');
+
             // for each column...
             foreach ($columns as $column)
             {
