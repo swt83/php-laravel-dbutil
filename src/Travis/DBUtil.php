@@ -14,7 +14,7 @@ class DBUtil
     public static function make($table, $columns, $connection = null)
     {
         // check exists
-        if (static::exists($table))
+        if (static::table_exists($table, $connection))
         {
             // error
             trigger_error('Table already exists.');
@@ -181,8 +181,8 @@ class DBUtil
      * @param   string  $table
      * @return  boolean
      */
-    public static function table_exists($table)
+    public static function table_exists($table, $connection = null)
     {
-        return in_array($table, static::tables());
+        return in_array($table, static::tables($connection));
     }
 }
