@@ -94,16 +94,56 @@ class DBUtil
      * @param   string  $connection
      * @return  array
      */
+    public static function field($table, $field, $connection = null)
+    {
+        $columns = static::get_table_columns($table, $connection);
+
+        // return
+        return isset($columns[$field]) ? $columns[$field] : [];
+    }
+
+    /**
+     * Get array of tables columns.
+     *
+     * @param   string  $table
+     * @param   string  $connection
+     * @return  array
+     */
     public static function columns($table, $connection = null)
+    {
+        return array_keys(static::get_table_columns($table, $connection));
+    }
+
+    /**
+     * Return list of columns from a table, with details.
+     *
+     * @param   string  $table
+     * @param   string  $connection
+     * @return  array
+     */
+    protected static function get_table_columns($table, $connection = null)
     {
         // query the pdo
         $result = \DB::connection($connection)->getPdo()->query('show columns from '.$table);
 
         // build array
-        $columns = array();
+        $columns = [];
         while ($row = $result->fetch(\PDO::FETCH_NUM))
         {
-            $columns[] = $row[0];
+            // split to find type and length
+            $parts1 = explode(' ', isset($row[1]) ? $row[1] : null);
+            $parts2 = explode('(', $parts1[0]);
+            $type = $parts2[0];
+            $length = isset($parts2[1]) ? str_replace(')', '', $parts2[1]) : null;
+
+            $columns[$row[0]] = [
+                'type' => $type,
+                'length' => $length,
+                'null' => isset($row[2]) ? $row[2] === 'YES' : null,
+                'key' => isset($row[3]) ? $row[3] : null,
+                'default' => isset($row[4]) ? $row[4] : null,
+                'extra' => isset($row[5]) ? $row[5] : null,
+            ];
         }
 
         // return
