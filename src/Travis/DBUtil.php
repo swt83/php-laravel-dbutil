@@ -137,9 +137,9 @@ class DBUtil
             $length = isset($parts2[1]) ? str_replace(')', '', $parts2[1]) : null;
 
             $columns[$row[0]] = [
-                'type' => $type,
-                'length' => $length,
-                'null' => isset($row[2]) ? $row[2] === 'YES' : null,
+                'type' => (string) $type,
+                'length' => (int) $length,
+                'null' => (bool) isset($row[2]) ? $row[2] === 'YES' : false,
                 'key' => isset($row[3]) ? $row[3] : null,
                 'default' => isset($row[4]) ? $row[4] : null,
                 'extra' => isset($row[5]) ? $row[5] : null,
