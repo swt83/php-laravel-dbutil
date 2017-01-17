@@ -88,18 +88,18 @@ class DBUtil
     }
 
     /**
-     * Get array of tables columns.
+     * Get information about a column.
      *
      * @param   string  $table
      * @param   string  $connection
      * @return  array
      */
-    public static function field($table, $field, $connection = null)
+    public static function type($table, $column, $connection = null)
     {
         $columns = static::get_table_columns($table, $connection);
 
         // return
-        return isset($columns[$field]) ? $columns[$field] : [];
+        return isset($columns[$column]) ? $columns[$column] : [];
     }
 
     /**
@@ -181,7 +181,7 @@ class DBUtil
      * @param   string  $table
      * @return  boolean
      */
-    public static function exists($table)
+    public static function table_exists($table)
     {
         return in_array($table, static::tables());
     }

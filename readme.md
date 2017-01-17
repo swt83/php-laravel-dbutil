@@ -15,7 +15,7 @@ Normal install via Composer.
 * ``DBUtil::truncate($table, [$connection]);`` Truncate a table.
 * ``DBUtil::optimize($table, [$connection]);`` Optimize a table.
 * ``DBUtil::columns($table, [$connection]);`` Returns array of available columns for table.
-* ``DBUtil::field($table, $column, [$connection]);`` Returns array of information about a field.
+* ``DBUtil::type($table, $column, [$connection]);`` Returns array of information about a column.
 * ``DBUtil::tables([$database], [$connection]);`` Returns array of available tables for database.
 * ``DBUtil::databases([$connection]);`` Returns array of available databases.
 
